@@ -573,16 +573,7 @@
 
         <div class="field">
           <label>Jornada de Trabajo <span class="req">*</span></label>
-          <select id="jornada_trabajo">
-            <option value="">Seleccionar tipo de jornada</option>
-            <option>Jornada completa (8 hs diarias)</option>
-            <option>Media jornada (4 hs diarias)</option>
-            <option>Jornada nocturna</option>
-            <option>Jornada por turnos rotativos</option>
-            <option>Jornada reducida</option>
-            <option>Jornada por convenio colectivo</option>
-            <option>Otra</option>
-          </select>
+          <input type="text" id="jornada_trabajo" placeholder="Ej: lunes a viernes de 08 a 17 hs" maxlength="80">
         </div>
 
         <div class="row-2">
@@ -952,6 +943,25 @@
           <input type="text" id="empresa_razon_social" placeholder="Nombre de la empresa empleadora" maxlength="60">
         </div>
 
+        <div class="row-2">
+          <div class="field">
+            <label>CUIT del Empleador</label>
+            <input type="text" id="empleador_cuit" placeholder="XX-XXXXXXXX-X" maxlength="13">
+          </div>
+          <div class="field">
+            <label>Teléfono del Empleador</label>
+            <input type="tel" id="empleador_telefono" placeholder="011 XXXX-XXXX" maxlength="20">
+          </div>
+        </div>
+        <div class="field">
+          <label>Domicilio del Empleador</label>
+          <input type="text" id="empleador_domicilio" placeholder="Calle, número, localidad" maxlength="80">
+        </div>
+        <div class="field">
+          <label>Establecimiento / Local</label>
+          <input type="text" id="empleador_establecimiento" placeholder="Nombre o descripción del establecimiento" maxlength="80">
+        </div>
+
         <div class="divider"></div>
 
         <label>Firma digital <span class="req">*</span></label>
@@ -1048,7 +1058,7 @@
       valid &= require("empleado_dni", "Ingresá el DNI del empleado");
       valid &= require("domicilio_laboral", "Ingresá el domicilio laboral");
       valid &= require("puesto_laboral", "Ingresá el puesto laboral");
-      valid &= requireSelect("jornada_trabajo", "Seleccioná la jornada de trabajo");
+      valid &= require("jornada_trabajo", "Ingresá la jornada de trabajo");
     }
     if (n === 2) {
       valid &= require("fecha_conocimiento", "Indicá la fecha en que se tomó conocimiento");
@@ -1275,7 +1285,7 @@
         empleado_cuil:         g("empleado_cuil"),
         domicilio_laboral:     g("domicilio_laboral"),
         puesto_laboral:        g("puesto_laboral"),
-        jornada_trabajo:       gv("jornada_trabajo"),
+        jornada_trabajo:       g("jornada_trabajo"),
         horario_entrada:       g("horario_entrada"),
         horario_salida:        g("horario_salida"),
         jornada_descripcion:   g("jornada_descripcion"),
@@ -1308,6 +1318,10 @@
         firmante_dni:          g("firmante_dni"),
         firmante_cargo:        g("firmante_cargo"),
         empresa_razon_social:  g("empresa_razon_social"),
+        empleador_cuit:        g("empleador_cuit"),
+        empleador_telefono:    g("empleador_telefono"),
+        empleador_domicilio:   g("empleador_domicilio"),
+        empleador_establecimiento: g("empleador_establecimiento"),
         firma_base64:          canvas.toDataURL("image/png"),
         // Archivos
         dni_empleado_frente:   dniFrenteB64,
