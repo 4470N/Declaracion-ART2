@@ -836,29 +836,6 @@
           <strong>Adjuntá la documentación solicitada.</strong> Fotografiá o escaneá cada documento. Formatos aceptados: JPG, PNG, PDF.
         </div>
 
-        <!-- DNI empleado -->
-        <div class="field">
-          <label>📇 Copia del DNI del Empleado — Frente y Dorso <span class="req">*</span></label>
-          <div class="file-grid">
-            <div class="file-item">
-              <div class="file-drop" id="drop-dni-frente">
-                <span class="icon">🪪</span>
-                <div class="file-label">DNI Frente<br><small>Tocar para adjuntar</small></div>
-                <input type="file" id="dni_empleado_frente" accept="image/*,application/pdf" onchange="markFile(this,'drop-dni-frente','DNI Frente ✓')">
-              </div>
-            </div>
-            <div class="file-item">
-              <div class="file-drop" id="drop-dni-dorso">
-                <span class="icon">🪪</span>
-                <div class="file-label">DNI Dorso<br><small>Tocar para adjuntar</small></div>
-                <input type="file" id="dni_empleado_dorso" accept="image/*,application/pdf" onchange="markFile(this,'drop-dni-dorso','DNI Dorso ✓')">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
         <div class="divider"></div>
 
         <!-- Recibo de sueldo -->
@@ -1092,12 +1069,6 @@
       }
     }
     if (n === 4) {
-      if (!document.getElementById("dni_empleado_frente").files.length) {
-        alert("Por favor adjuntá el frente del DNI del empleado."); valid = false;
-      }
-      if (!document.getElementById("dni_empleado_dorso").files.length) {
-        alert("Por favor adjuntá el dorso del DNI del empleado."); valid = false;
-      }
       if (!document.getElementById("recibo_sueldo").files.length) {
         alert("Por favor adjuntá el recibo de sueldo."); valid = false;
       }
@@ -1278,9 +1249,7 @@
     btn.textContent = "⏳ Enviando denuncia...";
 
     try {
-      const [dniFrenteB64, dniDorsoB64, reciboB64, arcaB64, fichadasB64, denunciaB64] = await Promise.all([
-        fileToBase64(document.getElementById("dni_empleado_frente").files[0]),
-        fileToBase64(document.getElementById("dni_empleado_dorso").files[0]),
+      const [reciboB64, arcaB64, fichadasB64, denunciaB64] = await Promise.all([
         fileToBase64(document.getElementById("recibo_sueldo").files[0]),
         fileToBase64(document.getElementById("constancia_arca").files[0]),
         fileToBase64(document.getElementById("registro_fichadas").files[0] || null),
@@ -1338,8 +1307,6 @@
         empleador_establecimiento: g("empleador_establecimiento"),
         firma_base64:          canvas.toDataURL("image/png"),
         // Archivos
-        dni_empleado_frente:   dniFrenteB64,
-        dni_empleado_dorso:    dniDorsoB64,
         recibo_sueldo:         reciboB64,
         constancia_arca:       arcaB64,
         registro_fichadas:     fichadasB64,
