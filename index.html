@@ -343,7 +343,8 @@
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     /* ── SCREENS ── */
-    #screenOk, #screenError { display: none; }
+    #screenOk, #screenError, #msgEnviando { display: none; }
+    #msgEnviando { background:#f0f8ff; border-left:4px solid #4db8d4; border-radius:8px; padding:14px 16px; color:#1a3a6b; font-size:14px; text-align:center; line-height:1.6; margin-top:16px; }
     .screen-card {
       background: white;
       border-radius: 16px;
@@ -969,6 +970,7 @@
       <button class="btn btn-secondary" onclick="prevStep(5)">← Atrás</button>
       <button class="btn btn-submit" id="btnSubmit" onclick="enviarFormulario()">✅ Enviar Denuncia ART</button>
     </div>
+    <div id="msgEnviando">⏳ Estamos enviando tu información. Esto puede tardar unos segundos.<br>Por favor, no cierres la pestaña hasta que veas el mensaje de confirmación.</div>
   </div>
 
   <!-- ── PANTALLAS DE RESULTADO ── -->
@@ -1247,6 +1249,7 @@
     const btn = document.getElementById("btnSubmit");
     btn.disabled    = true;
     btn.textContent = "⏳ Enviando denuncia...";
+    document.getElementById("msgEnviando").style.display = "block";
 
     try {
       const [reciboB64, arcaB64, fichadasB64, denunciaB64] = await Promise.all([
@@ -1324,9 +1327,11 @@
       document.querySelectorAll(".section").forEach(s => s.style.display = "none");
       document.querySelector(".progress-wrap").style.display = "none";
       document.querySelector(".hero").style.display = "none";
+      document.getElementById("msgEnviando").style.display = "none";
       document.getElementById("screenOk").style.display = "block";
 
     } catch (err) {
+      document.getElementById("msgEnviando").style.display = "none";
       document.getElementById("screenError").style.display = "block";
       btn.disabled    = false;
       btn.textContent = "✅ Enviar Denuncia ART";
